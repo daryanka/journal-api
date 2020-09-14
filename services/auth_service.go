@@ -13,20 +13,20 @@ import (
 )
 
 type AuthServiceI interface {
-	CreateUser(req *auth.CreateUser) (*auth.TokenWithClaims, *xerror.XerrorT)
+	Register(req *auth.CreateUser) (*auth.TokenWithClaims, *xerror.XerrorT)
 	Login(req *auth.LoginRequest) (*auth.TokenWithClaims, *xerror.XerrorT)
 }
 
-type authService struct {}
+type authService struct{}
 
 var AuthService AuthServiceI = &authService{}
 
-func (i *authService) CreateUser(req *auth.CreateUser) (*auth.TokenWithClaims, *xerror.XerrorT) {
+func (i *authService) Register(req *auth.CreateUser) (*auth.TokenWithClaims, *xerror.XerrorT) {
 	// Check that email is not already in use
 	var emailID int64
 	err := clients.ClientOrm.Table("users").
 		Select("id").
-		Where("email","=", req.Email).
+		Where("email", "=", req.Email).
 		First(&emailID)
 
 	if err != sql.ErrNoRows {
@@ -41,9 +41,9 @@ func (i *authService) CreateUser(req *auth.CreateUser) (*auth.TokenWithClaims, *
 	}
 
 	id, err := clients.ClientOrm.Table("users").Insert(myorm.H{
-		"email": req.Email,
+		"email":    req.Email,
 		"password": hashedPassword,
-		"2fa_url": "test",
+		"2fa_url":  "test",
 	})
 
 	if err != nil {
@@ -63,8 +63,8 @@ func (i *authService) CreateUser(req *auth.CreateUser) (*auth.TokenWithClaims, *
 func (i *authService) Login(req *auth.LoginRequest) (*auth.TokenWithClaims, *xerror.XerrorT) {
 	// Find user with email
 	var User struct {
-		ID int64 `db:"id"`
-		Email string `db:"email"`
+		ID       int64  `db:"id"`
+		Email    string `db:"email"`
 		Password string `db:"password"`
 	}
 

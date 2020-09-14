@@ -8,11 +8,11 @@ import (
 	"net/http"
 )
 
-func CreateUser(c *gin.Context)  {
+func Register(c *gin.Context) {
 	var req auth.CreateUser
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
-			"error": "true",
+			"error":   "true",
 			"message": "invalid request body",
 		})
 		return
@@ -23,7 +23,7 @@ func CreateUser(c *gin.Context)  {
 		return
 	}
 
-	token, err := services.AuthService.CreateUser(&req)
+	token, err := services.AuthService.Register(&req)
 
 	if err != nil {
 		c.JSON(err.StatusCode, err)
@@ -37,7 +37,7 @@ func Login(c *gin.Context) {
 	var req auth.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
-			"error": "true",
+			"error":   "true",
 			"message": "invalid request body",
 		})
 		return
