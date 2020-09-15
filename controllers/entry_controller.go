@@ -4,6 +4,7 @@ import (
 	"api/domains/entry"
 	"api/services"
 	"api/utils"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -12,6 +13,7 @@ import (
 func CreateEntry(c *gin.Context) {
 	var req entry.CreateEntryRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
+		fmt.Println("here", err.Error())
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"error":   "true",
 			"message": "invalid request body",
@@ -26,6 +28,18 @@ func CreateEntry(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, validationErr)
 		return
 	}
+
+	// Parse Day
+	t, e := utils.ParseDate(req.DayString)
+	fmt.Println(t)
+	if e != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"day": "invalid time structure",
+			"t":   req,
+		})
+		return
+	}
+	req.Day = t
 
 	id, err := services.EntryService.CreateEntry(req)
 

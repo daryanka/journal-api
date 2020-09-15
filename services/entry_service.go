@@ -3,6 +3,7 @@ package services
 import (
 	"api/clients"
 	"api/domains/entry"
+	"api/utils"
 	"api/utils/xerror"
 	"github.com/daryanka/myorm"
 )
@@ -28,6 +29,7 @@ func (i *entryService) CreateEntry(req entry.CreateEntryRequest) (int64, *xerror
 	})
 
 	if err != nil {
+		utils.ErrorLogger(err)
 		return 0, xerror.NewInternalError("server error")
 	}
 
@@ -46,6 +48,7 @@ func (i *entryService) UpdateEntry(userID int64, req entry.UpdateEntryRequest) *
 		})
 
 	if err != nil {
+		utils.ErrorLogger(err)
 		return xerror.NewInternalError("server error")
 	}
 
@@ -59,6 +62,7 @@ func (i *entryService) DeleteEntry(id, userID int64) *xerror.XerrorT {
 		Delete()
 
 	if err != nil {
+		utils.ErrorLogger(err)
 		return xerror.NewInternalError("server error")
 	}
 
