@@ -16,6 +16,8 @@ func StartRouting() {
 
 	entriesRoutes := r.Group("entries")
 	{
+		entriesRoutes.POST("/day", middleware.ValidateAuthToken(), controllers.ViewDayEntries)
+		entriesRoutes.POST("/range", middleware.ValidateAuthToken(), controllers.ViewRangeEntries)
 		entriesRoutes.POST("/", middleware.ValidateAuthToken(), controllers.CreateEntry)
 		entriesRoutes.PUT("/", middleware.ValidateAuthToken(), controllers.UpdateEntry)
 		entriesRoutes.DELETE("/:id", middleware.ValidateAuthToken(), controllers.DeleteEntry)

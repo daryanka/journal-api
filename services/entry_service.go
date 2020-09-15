@@ -5,6 +5,7 @@ import (
 	"api/domains/entry"
 	"api/utils"
 	"api/utils/xerror"
+	"database/sql"
 	"github.com/daryanka/myorm"
 )
 
@@ -12,6 +13,8 @@ type EntryServiceI interface {
 	CreateEntry(request entry.CreateEntryRequest) (int64, *xerror.XerrorT)
 	UpdateEntry(userID int64, request entry.UpdateEntryRequest) *xerror.XerrorT
 	DeleteEntry(id, userID int64) *xerror.XerrorT
+	ViewRangeEntries(from, to string, userID int64) ([]entry.Entry, *xerror.XerrorT)
+	ViewDayEntries(day string, userID int64) ([]entry.Entry, *xerror.XerrorT)
 }
 
 type entryService struct{}
@@ -67,4 +70,39 @@ func (i *entryService) DeleteEntry(id, userID int64) *xerror.XerrorT {
 	}
 
 	return nil
+}
+
+func (i *entryService) ViewDayEntries(day string, userID int64) ([]entry.Entry, *xerror.XerrorT) {
+	result := []entry.Entry{}
+
+	err := clients.ClientOrm.Table("entries").
+		Select("id", "day", "start_time", "end_time", "title", "description").
+		Where("day", "=", day).
+		Where("user_id", "=", userID).
+		Get(&result)
+
+	if err != nil && err != sql.ErrNoRows {
+		utils.ErrorLogger(err)
+		return nil, xerror.NewInternalError("server error")
+	}
+
+	return result, nil
+}
+
+func (i *entryService) ViewRangeEntries(from, to string, userID int64) ([]entry.Entry, *xerror.XerrorT) {
+	result := []entry.Entry{}
+
+	err := clients.ClientOrm.Table("entries").
+		Select("id", "day", "start_time", "end_time", "title", "description").
+		Where("day", ">=", from).
+		Where("day", "<=", to).
+		Where("user_id", "=", userID).
+		Get(&result)
+
+	if err != nil && err != sql.ErrNoRows {
+		utils.ErrorLogger(err)
+		return nil, xerror.NewInternalError("server error")
+	}
+
+	return result, nil
 }
