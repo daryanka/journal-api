@@ -5,7 +5,6 @@ import (
 	"api/services"
 	"api/utils"
 	"api/utils/xerror"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -14,7 +13,6 @@ import (
 func CreateEntry(c *gin.Context) {
 	var req entry.CreateEntryRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		fmt.Println("here", err.Error())
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"error":   "true",
 			"message": "invalid request body",

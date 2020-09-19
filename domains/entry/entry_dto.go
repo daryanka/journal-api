@@ -10,6 +10,7 @@ type CreateEntryRequest struct {
 	EndTime     string `json:"end_time" validate:"required"`
 	Title       string `json:"title" validate:"required"`
 	Description string `json:"description" validate:"required"`
+	TagID       *int64 `json:"tag_id"`
 }
 
 type UpdateEntryRequest struct {
@@ -18,6 +19,7 @@ type UpdateEntryRequest struct {
 	EndTime     string `json:"end_time" validate:"required"`
 	Title       string `json:"title" validate:"required"`
 	Description string `json:"description" validate:"required"`
+	TagID       *int64 `json:"tag_id"`
 }
 
 type EntriesRangeRequest struct {
@@ -30,10 +32,12 @@ type ViewDayRequest struct {
 }
 
 type Entry struct {
-	ID          int64  `json:"id" db:"id"`
-	Day         string `json:"day"`
-	StartTime   string `json:"start_time" db:"start_time"`
-	EndTime     string `json:"end_time" db:"end_time"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
+	ID          int64   `json:"id" db:"id"`
+	Day         string  `json:"day"`
+	StartTime   string  `json:"start_time" db:"start_time"`
+	EndTime     string  `json:"end_time" db:"end_time"`
+	Title       string  `json:"title"`
+	Description string  `json:"description"`
+	TagID       *int64  `json:"tag_id,omitempty" db:"tag_id"`
+	TagName     *string `json:"tag_name,omitempty" db:"tag_name"`
 }

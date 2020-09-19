@@ -57,3 +57,9 @@ func Login(c *gin.Context) {
 
 	c.JSON(http.StatusOK, token)
 }
+
+func Me(c *gin.Context) {
+	user := services.GetAuthUser(c)
+
+	c.JSON(http.StatusOK, user)
+}
