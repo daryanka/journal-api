@@ -13,12 +13,23 @@ import (
 	"github.com/go-playground/validator/v10"
 	"io"
 	"os"
+	"reflect"
 	"strings"
 	"time"
 )
 
 func ValidateStruct(obj interface{}) map[string]string {
 	v := validator.New()
+	v.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+
+		if name == "-" {
+			return ""
+		}
+
+		return name
+	})
+
 	err := v.Struct(obj)
 
 	if err == nil {
@@ -33,8 +44,14 @@ func ValidateStruct(obj interface{}) map[string]string {
 		field = strings.Join(fieldSplit, ".")
 
 		switch e.ActualTag() {
+		case "len":
+			errMap[field] = fmt.Sprintf("%v must have a length of %v", field, e.Param())
 		case "required":
 			errMap[field] = fmt.Sprintf("%v is a required field", field)
+		case "max":
+			errMap[field] = fmt.Sprintf("%v must have a length less than %v", field, e.Param())
+		case "min":
+			errMap[field] = fmt.Sprintf("%v must have a length greater than %v", field, e.Param())
 		default:
 			continue
 		}

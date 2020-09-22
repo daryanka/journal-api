@@ -1,7 +1,7 @@
 package tag
 
 type CreateTagRequest struct {
-	TagName string `json:"tag_name" validate:"required"`
+	TagName string `json:"tag_name" validate:"required,max=255"`
 }
 
 type TagType struct {
@@ -11,6 +11,6 @@ type TagType struct {
 }
 
 type UpdateTagRequest struct {
-	TagName string `json:"tag_name" validate:"required"`
+	TagName string `json:"tag_name" validate:"required,max=255"`
 	TagID   int64  `json:"tag_id" validate:"required"`
 }

@@ -4,20 +4,20 @@ import "time"
 
 type CreateEntryRequest struct {
 	UserID      int64  `json:"user_id"`
-	DayString   string `json:"day" validate:"required"`
+	DayString   string `json:"day" validate:"required,len=10"`
 	Day         time.Time
-	StartTime   string `json:"start_time" validate:"required"`
-	EndTime     string `json:"end_time" validate:"required"`
-	Title       string `json:"title" validate:"required"`
+	StartTime   string `json:"start_time" validate:"required,len=5"`
+	EndTime     string `json:"end_time" validate:"required,len=5"`
+	Title       string `json:"title" validate:"required,max=255"`
 	Description string `json:"description" validate:"required"`
 	TagID       *int64 `json:"tag_id"`
 }
 
 type UpdateEntryRequest struct {
 	ID          int64  `json:"id" validate:"required"`
-	StartTime   string `json:"start_time" validate:"required"`
-	EndTime     string `json:"end_time" validate:"required"`
-	Title       string `json:"title" validate:"required"`
+	StartTime   string `json:"start_time" validate:"required,len=5"`
+	EndTime     string `json:"end_time" validate:"required,len=5"`
+	Title       string `json:"title" validate:"required,len=255"`
 	Description string `json:"description" validate:"required"`
 	TagID       *int64 `json:"tag_id"`
 }
@@ -28,7 +28,7 @@ type EntriesRangeRequest struct {
 }
 
 type ViewDayRequest struct {
-	Day string `json:"day" validate:"required"`
+	Day string `json:"day" validate:"required,len=10"`
 }
 
 type Entry struct {
