@@ -7,8 +7,9 @@ type CreateUser struct {
 }
 
 type TokenWithClaims struct {
-	Token   string `json:"token"`
-	Expires int64  `json:"expires"`
+	Token     string `json:"token"`
+	Expires   int64  `json:"expires"`
+	ExpiresIn int    `json:"expires_in"`
 }
 
 type LoginRequest struct {

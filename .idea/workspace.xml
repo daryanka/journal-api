@@ -7,8 +7,6 @@
     <list default="true" id="ad5c03df-b752-4aab-a192-262ffd9e708e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domains/auth/auth_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/auth/auth_dto.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domains/entry/entry_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/entry/entry_dto.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domains/tag/tag_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/tag/tag_dto.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +71,8 @@
     <MESSAGE value="added query log and error log, fixed time, dealt with time parsing issue" />
     <MESSAGE value="fixed returned day string to only be day, added ability to get entries by range of dates" />
     <MESSAGE value="added tags CRUD" />
-    <option name="LAST_COMMIT_MESSAGE" value="added tags CRUD" />
+    <MESSAGE value="added validation error field to use json tag rather than struct name" />
+    <option name="LAST_COMMIT_MESSAGE" value="added validation error field to use json tag rather than struct name" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -83,10 +82,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="752" y="353" key="#Go_Modules/0.0.1920.1040/1920.1.1536.824@0.0.1920.1040" timestamp="1600012933129" />
-    <state x="585" y="88" key="CommitChangelistDialog2" timestamp="1600512298349">
+    <state x="585" y="88" key="CommitChangelistDialog2" timestamp="1600805601641">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="585" y="88" key="CommitChangelistDialog2/0.0.1920.1040/1920.1.1536.824@0.0.1920.1040" timestamp="1600512298349" />
+    <state x="585" y="88" key="CommitChangelistDialog2/0.0.1920.1040/1920.1.1536.824@0.0.1920.1040" timestamp="1600805601641" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1600512303656">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -77,8 +77,9 @@ func CreateAuthToken(userID int64) (*auth.TokenWithClaims, error) {
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 
 	return &auth.TokenWithClaims{
-		Token:   tokenString,
-		Expires: customClaims.StandardClaims.ExpiresAt,
+		Token:     tokenString,
+		Expires:   customClaims.StandardClaims.ExpiresAt,
+		ExpiresIn: 3600,
 	}, err
 }
 
