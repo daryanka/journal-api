@@ -1,6 +1,8 @@
 package clients
 
-import "github.com/daryanka/myorm"
+import (
+	"github.com/daryanka/myorm"
+)
 
 var ClientOrm *myorm.MyOrm
 
@@ -12,6 +14,12 @@ func InitializeOrm() {
 		DBAddress:      "127.0.0.1",
 		DBName:         "journal",
 		DBDriver:       "mysql",
-		ConnectionName: "default",
+		ConnectionName: "defaultCon",
 	})
+
+	db, _ := ClientOrm.GetDBConnection("defaultCon")
+	err := db.Ping()
+	if err != nil {
+		panic("Error connecting to database " + err.Error())
+	}
 }
