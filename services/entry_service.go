@@ -60,7 +60,7 @@ func (i *entryService) UpdateEntry(userID int64, req entry.UpdateEntryRequest) *
 
 		err := clients.ClientOrm.Table("tags").
 			Select("id").
-			WhereRaw("id = ? AND (user_id = ? OR user_id IS NULL)", userID, req.TagID).
+			WhereRaw("id = ? AND (user_id = ? OR user_id IS NULL)", *req.TagID, userID).
 			First(&tagID)
 
 		if err != nil {
@@ -114,6 +114,7 @@ func (i *entryService) ViewDayEntries(day string, userID int64) ([]entry.Entry, 
 			"description",
 			"tag_id",
 			"tag_name",
+			"hex_color",
 		).
 		LeftJoin("tags", "tags.id", "=", "entries.tag_id").
 		Where("day", "=", day).
@@ -141,6 +142,7 @@ func (i *entryService) ViewRangeEntries(from, to string, userID int64) ([]entry.
 			"description",
 			"tag_id",
 			"tag_name",
+			"hex_color",
 		).
 		LeftJoin("tags", "tags.id", "=", "entries.tag_id").
 		Where("day", ">=", from).

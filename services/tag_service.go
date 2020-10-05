@@ -37,8 +37,9 @@ func (t *tagService) CreateTag(req tag.CreateTagRequest, userID int64) (int64, *
 
 	id, err = clients.ClientOrm.Table("tags").
 		Insert(myorm.H{
-			"tag_name": req.TagName,
-			"user_id":  userID,
+			"tag_name":  req.TagName,
+			"user_id":   userID,
+			"hex_color": req.HexColor,
 		})
 
 	if err != nil {
@@ -54,7 +55,8 @@ func (t *tagService) UpdateTag(req tag.UpdateTagRequest, userID int64) *xerror.X
 		Where("user_id", "=", userID).
 		Where("id", "=", req.TagID).
 		Update(myorm.H{
-			"tag_name": req.TagName,
+			"tag_name":  req.TagName,
+			"hex_color": req.HexColor,
 		})
 
 	if err != nil {
@@ -100,7 +102,7 @@ func (t *tagService) MyTags(userID int64) ([]tag.TagType, *xerror.XerrorT) {
 	var result []tag.TagType
 
 	err := clients.ClientOrm.Table("tags").
-		Select("id", "tag_name", "user_id").
+		Select("id", "tag_name", "user_id", "hex_color").
 		WhereRaw("user_id = ? OR user_id IS NULL", userID).
 		Get(&result)
 

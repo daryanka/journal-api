@@ -9,7 +9,7 @@ type CreateEntryRequest struct {
 	StartTime   string `json:"start_time" validate:"required,len=5"`
 	EndTime     string `json:"end_time" validate:"required,len=5"`
 	Title       string `json:"title" validate:"required,max=255"`
-	Description string `json:"description" validate:"required"`
+	Description string `json:"description"`
 	TagID       *int64 `json:"tag_id"`
 }
 
@@ -17,8 +17,8 @@ type UpdateEntryRequest struct {
 	ID          int64  `json:"id" validate:"required"`
 	StartTime   string `json:"start_time" validate:"required,len=5"`
 	EndTime     string `json:"end_time" validate:"required,len=5"`
-	Title       string `json:"title" validate:"required,len=255"`
-	Description string `json:"description" validate:"required"`
+	Title       string `json:"title" validate:"required,max=255"`
+	Description string `json:"description"`
 	TagID       *int64 `json:"tag_id"`
 }
 
@@ -40,4 +40,5 @@ type Entry struct {
 	Description string  `json:"description"`
 	TagID       *int64  `json:"tag_id,omitempty" db:"tag_id"`
 	TagName     *string `json:"tag_name,omitempty" db:"tag_name"`
+	HexColor    *string `json:"hex_color,omitempty" db:"hex_color"`
 }
