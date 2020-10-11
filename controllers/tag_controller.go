@@ -107,3 +107,28 @@ func DeleteTag(c *gin.Context) {
 		"error": false,
 	})
 }
+
+func TagInUse(c *gin.Context) {
+	idStr := c.Param("id")
+	idInt, err := strconv.Atoi(idStr)
+
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"error":   true,
+			"message": "invalid tag id",
+		})
+		return
+	}
+
+	inUse, e := services.TagService.TagInUse(int64(idInt))
+
+	if e != nil {
+		c.JSON(e.StatusCode, e)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"error":  false,
+		"in-use": inUse,
+	})
+}

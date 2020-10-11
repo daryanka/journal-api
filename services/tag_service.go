@@ -14,6 +14,7 @@ type TagServiceI interface {
 	UpdateTag(request tag.UpdateTagRequest, userID int64) *xerror.XerrorT
 	DeleteTag(tagID, userID int64) *xerror.XerrorT
 	MyTags(userID int64) ([]tag.TagType, *xerror.XerrorT)
+	TagInUse(tagID int64) (bool, *xerror.XerrorT)
 }
 
 type tagService struct{}
@@ -112,4 +113,23 @@ func (t *tagService) MyTags(userID int64) ([]tag.TagType, *xerror.XerrorT) {
 	}
 
 	return result, nil
+}
+
+func (t *tagService) TagInUse(id int64) (bool, *xerror.XerrorT) {
+	var idInUse int
+
+	err := clients.ClientOrm.Table("entries").
+		Select("id").
+		Where("tag_id", "=", id).
+		First(&idInUse)
+
+	if err != nil && err != sql.ErrNoRows {
+		return true, xerror.NewInternalError("server error")
+	}
+
+	if err == sql.ErrNoRows || idInUse == 0 {
+		return false, nil
+	}
+
+	return true, nil
 }

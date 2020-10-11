@@ -28,7 +28,7 @@ func (i *entryService) CreateEntry(req entry.CreateEntryRequest) (int64, *xerror
 
 		err := clients.ClientOrm.Table("tags").
 			Select("id").
-			WhereRaw("id = ? AND (user_id = ? OR user_id IS NULL)", req.UserID, req.TagID).
+			WhereRaw("id = ? AND (user_id = ? OR user_id IS NULL)", req.TagID, req.UserID).
 			First(&tagID)
 
 		if err != nil {

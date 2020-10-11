@@ -55,6 +55,7 @@ func StartRouting() {
 		tagRoutes.POST("/", controllers.CreateTag)
 		tagRoutes.PUT("/", controllers.UpdateTag)
 		tagRoutes.DELETE("/:id", controllers.DeleteTag)
+		tagRoutes.GET("/in-use/:id", controllers.TagInUse)
 	}
 
 	if err := r.Run(":8080"); err != nil {
