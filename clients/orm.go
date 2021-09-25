@@ -2,14 +2,15 @@ package clients
 
 import (
 	"github.com/daryanka/myorm"
+	"os"
 )
 
 var ClientOrm *myorm.MyOrm
 
 func InitializeOrm() {
 	ClientOrm = myorm.DBInit(myorm.DBConnection{
-		DBUsername:     "root",
-		DBPassword:     "",
+		DBUsername:     os.Getenv("DB_USER"),
+		DBPassword:     os.Getenv("DB_PASS"),
 		DBProtocol:     "tcp",
 		DBAddress:      "127.0.0.1",
 		DBName:         "journal",
